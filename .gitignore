@@ -1,25 +1,58 @@
-/.phpunit.cache
-/node_modules
+# Laravel
+.env
+.env.backup
+.env.production
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
 /storage/pail
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon
+
+ehthumbs.db
+Thumbs.db
+.directory
+
+# Composer
 /vendor
-.env
-.env.backup
-.env.production
-.phpactor.json
+
+# Node
+/node_modules
+npm-debug.log
+
+# PHPUnit
+/.phpunit.cache
 .phpunit.result.cache
+
+# Homestead
 Homestead.json
 Homestead.yaml
-npm-debug.log
+
+# Yarn
 yarn-error.log
+yarn-debug.log
+
+# IDEs and editors
 /auth.json
 /.fleet
 /.idea
 /.nova
 /.vscode
 /.zed
-composer.lock
-.DS_Store
+.phpactor.json
+*~
+*.swp
+*.swo
+*.sublime-*
+*.stTheme.cache
+*.tmlanguage.cache
+*.tmPreferences.cache
+.settings/*
+nbproject/*
