@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "onlegstudios/starter-kit",
+    "name": "onelegstudios/starter-kit",
     "type": "project",
     "description": "A Laravel livewire starter kir.",
     "keywords": [
