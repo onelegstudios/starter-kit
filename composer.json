@@ -5,7 +5,17 @@
     "description": "A Laravel livewire starter kit.",
     "keywords": [
         "laravel",
-        "framework"
+        "framework",
+        "starter kit",
+        "flux",
+        "fortify",
+        "livewire",
+        "boost",
+        "laravel-debugbar",
+        "laravel-ide-helper",
+        "laravel-login-link",
+        "pest",
+        "solo"
     ],
     "license": "MIT",
     "require": {
@@ -46,7 +56,7 @@
     "scripts": {
         "setup": [
             "composer install",
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+           "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
             "@php artisan migrate --force",
             "npm install",
