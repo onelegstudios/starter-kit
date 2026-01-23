@@ -96,7 +96,8 @@
             "@php artisan ide-helper:generate --ansi",
             "@php artisan ide-helper:meta --ansi",
             "@php artisan ide-helper:models --ansi --nowrite",
-            "@php artisan vendor:publish --tag=login-link-config --ansi"
+            "@php artisan vendor:publish --tag=login-link-config --ansi",
+            "npm install"
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
