@@ -1,8 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "onelegstudios/starter-kit",
     "type": "project",
-    "description": "A Laravel livewire starter kit.",
     "keywords": [
         "laravel",
         "framework",
@@ -31,7 +29,6 @@
         "barryvdh/laravel-ide-helper": "^3.6",
         "fakerphp/faker": "^1.23",
         "fruitcake/laravel-debugbar": "^3.16",
-        "laravel/boost": "^1.8",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.41",
@@ -39,7 +36,7 @@
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^4.3",
         "pestphp/pest-plugin-laravel": "^4.0",
-        "soloterm/solo": "^0.5.0"
+        "phpunit/phpunit": "^11.5.3"
     },
     "autoload": {
         "psr-4": {
@@ -56,7 +53,7 @@
     "scripts": {
         "setup": [
             "composer install",
-           "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
             "@php artisan migrate --force",
             "npm install",
@@ -88,16 +85,15 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
+            "@php rename_livewire_files.php",
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --graceful --ansi",
-            "@php artisan boost:install --ansi",
             "@php artisan solo:install --ansi",
             "@php artisan ide-helper:generate --ansi",
             "@php artisan ide-helper:meta --ansi",
             "@php artisan ide-helper:models --ansi --nowrite",
             "@php artisan vendor:publish --tag=login-link-config --ansi",
-            "npm install"
+            "@php artisan migrate --graceful --ansi"
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
