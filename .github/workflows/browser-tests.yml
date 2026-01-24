@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - pest-ci
-      - develop
+      - dev
       - main
   pull_request:
     branches:
       - pest-ci
-      - develop
+      - dev
       - main
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install Node Dependencies
         run: npm i
@@ -61,10 +61,10 @@ jobs:
 
       - name: Setup Test Environment
         run: |
-           cp vendor/laravel-labs/starter-kit-browser-tests/phpunit.xml.dist .
-           rm phpunit.xml
-           rm -Rf tests/
-           cp -rf vendor/laravel-labs/starter-kit-browser-tests/tests/ tests/
+          cp vendor/laravel-labs/starter-kit-browser-tests/phpunit.xml.dist .
+          rm phpunit.xml
+          rm -Rf tests/
+          cp -rf vendor/laravel-labs/starter-kit-browser-tests/tests/ tests/
 
       - name: Build Assets
         run: npm run build
