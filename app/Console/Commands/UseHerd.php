@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Laravel\Prompts\confirm;
 use Laravel\Prompts\Prompt;
 
 class UseHerd extends Command
@@ -38,7 +39,7 @@ class UseHerd extends Command
             $this->hidden = true;
         }
 
-        $usingHerd = \Laravel\Prompts\confirm('Are you using Laravel Herd?');
+        $usingHerd = confirm('Are you using Laravel Herd?');
 
         if (!$usingHerd) {
             $this->uncommentHttpCommand();
