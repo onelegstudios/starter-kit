@@ -3,8 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Laravel\Prompts\confirm;
-use Laravel\Prompts\Prompt;
 
 class UseHerd extends Command
 {
@@ -35,13 +33,13 @@ class UseHerd extends Command
     public function handle(): int
     {
         // Hide command if not in local environment
-        if (!$this->isLocal()) {
+        if (! $this->isLocal()) {
             $this->hidden = true;
         }
 
         $usingHerd = confirm('Are you using Laravel Herd?');
 
-        if (!$usingHerd) {
+        if (! $usingHerd) {
             $this->uncommentHttpCommand();
             $this->info('HTTP command enabled in config/solo.php');
         } else {
