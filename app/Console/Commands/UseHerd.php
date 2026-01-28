@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use function Laravel\Prompts\confirm;
 
 class UseHerd extends Command
 {
