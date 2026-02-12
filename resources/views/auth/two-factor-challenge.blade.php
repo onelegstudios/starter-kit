@@ -40,7 +40,7 @@
             <form method="POST" action="{{ route('two-factor.login.store') }}">
                 @csrf
 
-                <div class="space-y-5 text-center">
+                <div class="text-center space-y-5">
                     <div x-show="!showRecoveryInput">
                         <div class="flex items-center justify-center my-5">
                             <flux:otp

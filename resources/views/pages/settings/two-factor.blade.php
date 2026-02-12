@@ -186,7 +186,7 @@ new class extends Component {
         :heading="__('Two Factor Authentication')"
         :subheading="__('Manage your two-factor authentication settings')"
     >
-        <div class="flex flex-col w-full mx-auto space-y-6 text-sm" wire:cloak>
+        <div class="flex flex-col w-full mx-auto text-sm space-y-6" wire:cloak>
             @if ($twoFactorEnabled)
                 <div class="space-y-4">
                     <div class="flex items-center gap-3">
@@ -259,7 +259,7 @@ new class extends Component {
                     </div>
                 </div>
 
-                <div class="space-y-2 text-center">
+                <div class="text-center space-y-2">
                     <flux:heading size="lg">{{ $this->modalConfig['title'] }}</flux:heading>
                     <flux:text>{{ $this->modalConfig['description'] }}</flux:text>
                 </div>
@@ -267,7 +267,7 @@ new class extends Component {
 
             @if ($showVerificationStep)
                 <div class="space-y-6">
-                    <div class="flex flex-col items-center space-y-3 justify-center">
+                    <div class="flex flex-col items-center justify-center space-y-3">
                         <flux:otp
                             name="code"
                             wire:model="code"
@@ -311,7 +311,7 @@ new class extends Component {
                         @else
                             <div x-data class="flex items-center justify-center h-full p-4">
                                 <div
-                                    class="bg-white p-3 rounded"
+                                    class="p-3 bg-white rounded"
                                     :style="($flux.appearance === 'dark' || ($flux.appearance === 'system' && $flux.dark)) ? 'filter: invert(1) brightness(1.5)' : ''"
                                 >
                                     {!! $qrCodeSvg !!}
@@ -370,7 +370,7 @@ new class extends Component {
 
                                 <button
                                     @click="copy()"
-                                    class="px-3 transition-colors border-l cursor-pointer border-stone-200 dark:border-stone-600"
+                                    class="px-3 border-l cursor-pointer transition-colors border-stone-200 dark:border-stone-600"
                                 >
                                     <flux:icon.document-duplicate x-show="!copied" variant="outline"></flux:icon>
                                     <flux:icon.check

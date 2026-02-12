@@ -35,14 +35,14 @@
         </form>
 
         @if (Route::has('register'))
-            <div class="space-x-1 text-sm text-center rtl:space-x-reverse text-zinc-600 dark:text-zinc-400">
+            <div class="text-sm text-center space-x-1 rtl:space-x-reverse text-zinc-600 dark:text-zinc-400">
                 <span>{{ __('Don\'t have an account?') }}</span>
                 <flux:link :href="route('register')" wire:navigate>{{ __('Sign up') }}</flux:link>
             </div>
         @endif
 
         @env('local')
-            <div class="flex items-center justify-center gap-4 p-4 rounded-lg border text-zinc-600 dark:text-zinc-400">
+            <div class="flex items-center justify-center p-4 border rounded-lg gap-4 text-zinc-600 dark:text-zinc-400">
                 <x-login-link email="test@example.com" :userAttributes="['name' => 'Test user']" label="Login as test user" />
             </div>
         @endenv
