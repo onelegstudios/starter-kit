@@ -1,58 +1,118 @@
-# Laravel
-.env
-.env.backup
-.env.production
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
-
-# OS generated files
+# OS Generated Files
 .DS_Store
 .DS_Store?
-._*
 .Spotlight-V100
 .Trashes
+._*
 Icon
 
+.directory
 ehthumbs.db
 Thumbs.db
-.directory
+
+# IDEs And Editors
+# Generic Editor Temp Files
+*~
+
+# Generic Editor Metadata Caches
+*.stTheme.cache
+*.tmlanguage.cache
+*.tmPreferences.cache
+
+# Generic Auth/Workspace Metadata
+/auth.json
+
+# Eclipse/PHPEclipse
+.settings/*
+
+# Emacs
+\#*\#
+.\#*
+
+# JetBrains IDEs
+/.fleet
+/.idea
+/.phpstorm.meta.php
+
+# NetBeans
+nbproject/*
+
+# Panic Nova
+/.nova
+
+# Phpactor
+.phpactor.json
+
+# Sublime Text
+*.sublime-*
+
+# Vim
+*.swp
+*.swo
+
+# Visual Studio
+/.vs/
+
+# VS Code
+/.vscode
+
+# Zed
+/.zed
 
 # Composer
 /vendor
 
-# Node
-/node_modules
-npm-debug.log
-
-# PHPUnit
-/.phpunit.cache
-.phpunit.result.cache
+# Laravel IDE Helper
+/_ide_helper.php
+/_ide_helper_models.php
+/_ide_helper_meta.php
 
 # Homestead
 Homestead.json
 Homestead.yaml
 
-# Yarn
-yarn-error.log
-yarn-debug.log
+# Laravel - Environment
+.env
+.env.*
+!.env.example
+!.env.*.example
 
-# IDEs and editors
-/auth.json
-/.fleet
-/.idea
-/.nova
-/.vscode
-/.zed
-.phpactor.json
-*~
-*.swp
-*.swo
-*.sublime-*
-*.stTheme.cache
-*.tmlanguage.cache
-*.tmPreferences.cache
-.settings/*
-nbproject/*
+# Laravel - Frontend Build Output
+/public/build
+/public/hot
+/public/storage
+
+# Laravel - Runtime Artifacts
+/debugbar
+/storage/*.key
+/storage/debugbar
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/testing
+/storage/framework/views
+/storage/logs/*.log
+/storage/pail
+
+# Laravel - Bootstrap Cache
+/bootstrap/cache/*.php
+!/bootstrap/cache/.gitignore
+
+# Misc Tool Caches
+.php-cs-fixer.cache
+.eslintcache
+
+# Node
+/node_modules
+npm-debug.log*
+
+# PHPUnit / Coverage
+/.coverage
+/.phpunit.cache
+.phpunit.result.cache
+clover.xml
+coverage/
+
+# Yarn
+yarn-error.log*
+yarn-debug.log*
+pnpm-debug.log*
