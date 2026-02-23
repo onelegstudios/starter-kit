@@ -39,40 +39,14 @@
                 <flux:navbar.item class="max-lg:hidden" icon="information-circle" href="#" label="Help" />
                 <flux:separator vertical />
             </flux:navbar>
-            @guest
-                {{-- <flux:button.group> --}}
+
+            @auth()
+                <x-layouts.user-menu align="end" />
+            @else
                 <div class="flex items-center gap-2">
                     <flux:button icon="log-in" href="{{ route('login') }}" label="Login" />
                     <flux:button icon="user-plus" href="{{ route('register') }}" label="Register" variant="filled" />
-                </div class="flex items-center gap-2"> {{-- </flux:button.group> --}}
-            @endguest
-
-            @auth()
-                <flux:dropdown align="end">
-                    <flux:profile circle avatar:name="{{ Auth::user()->name }}" />
-
-                    <flux:menu>
-                        <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                            <flux:avatar circle :name="auth()->user()->name" />
-                            <div class="flex-1 text-sm leading-tight grid text-start">
-                                <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
-                                <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
-                            </div>
-                        </div>
-                        <flux:menu.separator />
-                        <flux:menu.item :href="route('profile.edit')" icon="settings" wire:navigate>
-                            {{ __('Settings') }}
-                        </flux:menu.item>
-                        <flux:menu.separator />
-                        <form method="POST" action="{{ route('logout') }}" class="w-full">
-                            @csrf
-                            <flux:menu.item as="button" type="submit" icon="log-out" class="w-full cursor-pointer"
-                                data-test="logout-button">
-                                {{ __('Log Out') }}
-                            </flux:menu.item>
-                        </form>
-                    </flux:menu>
-                </flux:dropdown>
+                </div>
             @endauth
         </flux:header>
 
