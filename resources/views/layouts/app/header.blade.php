@@ -1,81 +1,121 @@
 <x-layouts::base :title="$title ?? null">
+    <div class="flex min-h-dvh flex-col">
+        <flux:header container class="border-b bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700">
+            <flux:sidebar.toggle class="lg:hidden" icon="menu" inset="left" />
 
-    <flux:header container class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-        <flux:sidebar.toggle class="mr-2 lg:hidden" icon="menu" inset="left" />
+            <flux:brand href="#" logo="https://fluxui.dev/img/demo/logo.png" name="Acme Inc."
+                class="max-lg:hidden dark:hidden" />
+            <flux:brand href="#" logo="https://fluxui.dev/img/demo/dark-mode-logo.png" name="Acme Inc."
+                class="max-lg:hidden! hidden dark:flex" />
 
-        <x-app-logo href="{{ route('home') }}" wire:navigate />
-
-        <flux:navbar class="-mb-px max-lg:hidden">
-            <flux:navbar.item icon="home" :href="route('home')" :current="request()->routeIs('home')" wire:navigate>
-                {{ __('Home') }}
-            </flux:navbar.item>
-            @auth
-                <flux:navbar.item icon="layout-dashboard" :href="route('dashboard')"
-                    :current="request()->routeIs('dashboard')" wire:navigate>
-                    {{ __('Dashboard') }}
+            <flux:navbar class="-mb-px max-lg:hidden">
+                <flux:navbar.item icon="home" href="{{ route('home') }}" :current="request()->routeIs('home')">Home
                 </flux:navbar.item>
+                @auth
+                    <flux:navbar.item icon="layout-dashboard" href="{{ route('dashboard') }}"
+                        :current="request()->routeIs('dashboard')">Dashboard</flux:navbar.item>
+                @endauth
+                <flux:navbar.item icon="inbox" badge="12" href="#">Inbox</flux:navbar.item>
+                <flux:navbar.item icon="document-text" href="#">Documents</flux:navbar.item>
+                <flux:navbar.item icon="calendar" href="#">Calendar</flux:navbar.item>
+
+                <flux:separator vertical variant="subtle" class="my-2" />
+
+                <flux:dropdown class="max-lg:hidden">
+                    <flux:navbar.item icon="star" icon:trailing="chevron-down">Favorites</flux:navbar.item>
+
+                    <flux:navmenu>
+                        <flux:navmenu.item href="#">Marketing site</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Android app</flux:navmenu.item>
+                        <flux:navmenu.item href="#">Brand guidelines</flux:navmenu.item>
+                    </flux:navmenu>
+                </flux:dropdown>
+            </flux:navbar>
+
+            <flux:spacer />
+
+            <flux:navbar class="me-4">
+                <flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
+                <flux:navbar.item class="max-lg:hidden" icon="information-circle" href="#" label="Help" />
+                <flux:separator vertical />
+            </flux:navbar>
+            @guest
+                {{-- <flux:button.group> --}}
+                <div class="flex items-center gap-2">
+                    <flux:button icon="log-in" href="{{ route('login') }}" label="Login" />
+                    <flux:button icon="user-plus" href="{{ route('register') }}" label="Register" variant="filled" />
+                </div class="flex items-center gap-2"> {{-- </flux:button.group> --}}
+            @endguest
+
+            @auth()
+                <flux:dropdown align="end">
+                    <flux:profile circle avatar:name="{{ Auth::user()->name }}" />
+
+                    <flux:menu>
+                        <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
+                            <flux:avatar circle :name="auth()->user()->name" />
+                            <div class="flex-1 text-sm leading-tight grid text-start">
+                                <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
+                                <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
+                            </div>
+                        </div>
+                        <flux:menu.separator />
+                        <flux:menu.item :href="route('profile.edit')" icon="settings" wire:navigate>
+                            {{ __('Settings') }}
+                        </flux:menu.item>
+                        <flux:menu.separator />
+                        <form method="POST" action="{{ route('logout') }}" class="w-full">
+                            @csrf
+                            <flux:menu.item as="button" type="submit" icon="log-out" class="w-full cursor-pointer"
+                                data-test="logout-button">
+                                {{ __('Log Out') }}
+                            </flux:menu.item>
+                        </form>
+                    </flux:menu>
+                </flux:dropdown>
             @endauth
-        </flux:navbar>
+        </flux:header>
 
-        <flux:spacer />
+        <flux:main container class="flex-1">
+            {{ $slot }}
+        </flux:main>
+    </div>
 
-        <flux:navbar class="me-1.5 space-x-0.5 rtl:space-x-reverse py-0!">
-            <flux:tooltip :content="__('Search')" position="bottom">
-                <flux:navbar.item class="h-10 [&>div>svg]:size-5" icon="magnifying-glass" href="#"
-                    :label="__('Search')" />
-            </flux:tooltip>
-            <flux:tooltip :content="__('Repository')" position="bottom">
-                <flux:navbar.item class="h-10 max-lg:hidden [&>div>svg]:size-5" icon="github"
-                    href="https://github.com/laravel/livewire-starter-kit" target="_blank" :label="__('Repository')" />
-            </flux:tooltip>
-            <flux:tooltip :content="__('Documentation')" position="bottom">
-                <flux:navbar.item class="h-10 max-lg:hidden [&>div>svg]:size-5" icon="notebook-text"
-                    href="https://laravel.com/docs/starter-kits#livewire" target="_blank" label="Documentation" />
-            </flux:tooltip>
-        </flux:navbar>
-
-        @auth
-            <x-desktop-user-menu />
-        @endauth
-    </flux:header>
-
-    <!-- Mobile Menu -->
-    <flux:sidebar collapsible="mobile" sticky
-        class="lg:hidden border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <flux:sidebar sticky collapsible="mobile"
+        class="border-r lg:hidden bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700">
         <flux:sidebar.header>
-            <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
+            <flux:sidebar.brand href="#" logo="https://fluxui.dev/img/demo/logo.png"
+                logo:dark="https://fluxui.dev/img/demo/dark-mode-logo.png" name="Acme Inc." />
+
             <flux:sidebar.collapse
                 class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2" />
         </flux:sidebar.header>
 
         <flux:sidebar.nav>
-            <flux:sidebar.group :heading="__('Platform')">
-                <flux:sidebar.item icon="home" :href="route('home')" :current="request()->routeIs('home')"
-                    wire:navigate>
-                    {{ __('Home') }}
-                </flux:sidebar.item>
-                @auth
-                    <flux:sidebar.item icon="layout-dashboard" :href="route('dashboard')"
-                        :current="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
-                    </flux:sidebar.item>
-                @endauth
+            <flux:sidebar.item icon="home" href="{{ route('home') }}" :current="request()->routeIs('home')">Home
+            </flux:sidebar.item>
+            @auth
+                <flux:sidebar.item icon="layout-dashboard" href="{{ route('dashboard') }}"
+                    :current="request()->routeIs('dashboard')">
+                    Dashboard</flux:sidebar.item>
+            @endauth
+            <flux:sidebar.item icon="inbox" badge="12" href="#">Inbox</flux:sidebar.item>
+            <flux:sidebar.item icon="document-text" href="#">Documents</flux:sidebar.item>
+            <flux:sidebar.item icon="calendar" href="#">Calendar</flux:sidebar.item>
+
+            <flux:sidebar.group heading="Favorites" icon="star" class="grid" expandable :expanded="false">
+                <flux:sidebar.item href="#">Marketing site</flux:sidebar.item>
+                <flux:sidebar.item href="#">Android app</flux:sidebar.item>
+                <flux:sidebar.item href="#">Brand guidelines</flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 
-        <flux:spacer />
+        <flux:sidebar.spacer />
 
         <flux:sidebar.nav>
-            <flux:sidebar.item icon="github" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-            </flux:sidebar.item>
-            <flux:sidebar.item icon="notebook-text" href="https://laravel.com/docs/starter-kits#livewire"
-                target="_blank">
-                {{ __('Documentation') }}
-            </flux:sidebar.item>
+            <flux:sidebar.item icon="cog-6-tooth" href="#">Settings</flux:sidebar.item>
+            <flux:sidebar.item icon="information-circle" href="#">Help</flux:sidebar.item>
         </flux:sidebar.nav>
     </flux:sidebar>
-
-    {{ $slot }}
 
 </x-layouts::base>
