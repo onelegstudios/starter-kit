@@ -1,3 +1,5 @@
+@blaze
+
 @props([
     'align' => 'start',
     'position' => 'bottom',
