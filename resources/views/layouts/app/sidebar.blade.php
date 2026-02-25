@@ -6,6 +6,7 @@
                 logo:dark="https://fluxui.dev/img/demo/dark-mode-logo.png" name="Acme Inc." />
 
             <flux:sidebar.collapse class="lg:hidden" />
+            <x-layouts.dark-mode align="end" class="max-lg:hidden" />
         </flux:sidebar.header>
 
         <flux:sidebar.search placeholder="Search..." />
@@ -43,17 +44,18 @@
 
     </flux:sidebar>
 
-
-
     <flux:header class="lg:hidden">
         <flux:sidebar.toggle class="lg:hidden" icon="menu" inset="left" />
 
         <flux:spacer />
 
-        @auth()
-            <x-layouts.user-menu :circle="true" />
-        @else
-            <div class="flex items-center gap-2">
+
+        <div class="flex items-center gap-2">
+            <x-layouts.dark-mode />
+
+            @auth()
+                <x-layouts.user-menu :circle="true" />
+            @else
                 <flux:button icon="log-in" href="{{ route('login') }}" label="Login" />
                 <flux:button icon="user-plus" href="{{ route('register') }}" label="Register" variant="filled" />
             </div class="flex items-center gap-2">

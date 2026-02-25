@@ -36,18 +36,18 @@
 
             <flux:navbar class="me-4">
                 <flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
-                <flux:navbar.item class="max-lg:hidden" icon="information-circle" href="#" label="Help" />
-                <flux:separator vertical />
             </flux:navbar>
 
-            @auth()
-                <x-layouts.user-menu align="end" />
-            @else
-                <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2">
+                <x-layouts.dark-mode />
+
+                @auth()
+                    <x-layouts.user-menu align="end" />
+                @else
                     <flux:button icon="log-in" href="{{ route('login') }}" label="Login" />
                     <flux:button icon="user-plus" href="{{ route('register') }}" label="Register" variant="filled" />
-                </div>
-            @endauth
+                @endauth
+            </div>
         </flux:header>
 
         <flux:main container class="flex-1">
