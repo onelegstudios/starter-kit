@@ -1,12 +1,12 @@
 <x-layouts::base :title="$title ?? null">
-    <div class="flex min-h-dvh flex-col">
-        <flux:header container class="border-b bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700">
-            <flux:sidebar.toggle class="lg:hidden" icon="menu" inset="left" />
+    <div class="flex flex-col min-h-dvh">
+        <flux:header container class="py-2 border-b bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700">
 
-            <flux:brand href="#" logo="https://fluxui.dev/img/demo/logo.png" name="Acme Inc."
-                class="max-lg:hidden dark:hidden" />
+            <flux:brand href="#" logo="https://fluxui.dev/img/demo/logo.png" name="Acme Inc." class="dark:hidden" />
             <flux:brand href="#" logo="https://fluxui.dev/img/demo/dark-mode-logo.png" name="Acme Inc."
-                class="max-lg:hidden! hidden dark:flex" />
+                class="hidden dark:flex" />
+
+            <flux:spacer />
 
             <flux:navbar class="-mb-px max-lg:hidden">
                 <flux:navbar.item icon="home" href="{{ route('home') }}" :current="request()->routeIs('home')">Home
@@ -34,12 +34,11 @@
 
             <flux:spacer />
 
-            <flux:navbar class="me-4">
-                <flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
-            </flux:navbar>
+            <div class="flex items-center gap-2 lg:gap-3">
+                <x-layouts.dark-mode class="max-lg:hidden!" />
 
-            <div class="flex items-center gap-2">
-                <x-layouts.dark-mode />
+                <flux:input type="search" icon="search" placeholder="Search..." size="sm"
+                    class="w-40! max-lg:hidden" />
 
                 @auth()
                     <x-layouts.user-menu align="end" />
@@ -47,6 +46,8 @@
                     <flux:button icon="log-in" href="{{ route('login') }}" label="Login" />
                     <flux:button icon="user-plus" href="{{ route('register') }}" label="Register" variant="filled" />
                 @endauth
+                <flux:separator vertical class="m-2 lg:hidden" />
+                <flux:sidebar.toggle class="lg:hidden" icon="menu" inset="left" />
             </div>
         </flux:header>
 
@@ -55,14 +56,13 @@
         </flux:main>
     </div>
 
-    <flux:sidebar sticky collapsible="mobile"
-        class="border-r lg:hidden bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700">
+    <flux:sidebar sticky collapsible="mobile" class="w-full lg:hidden bg-zinc-50 dark:bg-zinc-900">
         <flux:sidebar.header>
             <flux:sidebar.brand href="#" logo="https://fluxui.dev/img/demo/logo.png"
                 logo:dark="https://fluxui.dev/img/demo/dark-mode-logo.png" name="Acme Inc." />
-
-            <flux:sidebar.collapse
-                class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2" />
+            <flux:spacer />
+            <x-layouts.dark-mode />
+            <flux:sidebar.collapse />
         </flux:sidebar.header>
 
         <flux:sidebar.nav>

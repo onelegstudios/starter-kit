@@ -23,7 +23,7 @@
         </flux:menu>
     </flux:dropdown>
 @elseif ($type === 'bar')
-    <flux:radio.group x-data variant="segmented" x-model="$flux.appearance">
+    <flux:radio.group x-data variant="segmented" x-model="$flux.appearance" class="{{ $attributes->get('class') }}">
         <flux:radio value="light" icon="sun">{{ __('Light') }}</flux:radio>
         <flux:radio value="dark" icon="moon">{{ __('Dark') }}</flux:radio>
         <flux:radio value="system" icon="computer-desktop">{{ __('System') }}</flux:radio>
@@ -35,7 +35,7 @@
         <flux:radio value="system" icon="monitor" />
     </flux:radio.group>
 @elseif ($type === 'button')
-    <flux:button x-data variant="subtle" square class="group" class="{{ $attributes->get('class') }}"
+    <flux:button x-data variant="subtle" square {{ $attributes->merge(['class' => 'group']) }}
         aria-label="Cycle preferred color scheme"
         x-on:click="$flux.appearance = $flux.appearance === 'light' ? 'dark' : ($flux.appearance === 'dark' ? 'system' : 'light')">
         <flux:icon.sun x-show="$flux.appearance === 'light'" class="text-zinc-500 dark:text-white" />
