@@ -6,7 +6,7 @@
 ])
 
 <flux:dropdown align="{{ $align }}" position="{{ $position }}">
-    <flux:profile circle avatar:name="{{ Auth::user()->name }}" />
+    <flux:profile circle :initials="auth()->user()->initials()" />
 
     <flux:menu>
         <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
