@@ -2,11 +2,11 @@
 
 use App\Concerns\PasswordValidationRules;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new class extends Component {
+new #[Title('Password settings')] class extends Component {
     use PasswordValidationRules;
 
     public string $current_password = '';
@@ -42,7 +42,7 @@ new class extends Component {
 <section class="w-full">
     @include('partials.settings-heading')
 
-    <flux:heading class="sr-only">{{ __('Password Settings') }}</flux:heading>
+    <flux:heading class="sr-only">{{ __('Password settings') }}</flux:heading>
 
     <x-pages::settings.layout :heading="__('Update password')" :subheading="__('Ensure your account is using a long, random password to stay secure')">
         <form method="POST" wire:submit="updatePassword" class="mt-6 space-y-6">
@@ -62,7 +62,7 @@ new class extends Component {
             />
             <flux:input
                 wire:model="password_confirmation"
-                :label="__('Confirm Password')"
+                :label="__('Confirm password')"
                 type="password"
                 required
                 autocomplete="new-password"
