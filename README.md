@@ -1,29 +1,43 @@
-# Laravel + Livewire Starter Kit
+# OneLegStudios Laravel + Livewire Starter Kit
 
-## Introduction
+## Overview
 
-Our Laravel + [Livewire](https://livewire.laravel.com) starter kit provides a robust, modern starting point for building Laravel applications with a Livewire frontend.
+This project is based on `laravel/livewire-starter-kit` and extended with additional authentication, developer experience, and local-development tooling.
 
-Livewire is a powerful way of building dynamic, reactive, frontend UIs using just PHP. It's a great fit for teams that primarily use Blade templates and are looking for a simpler alternative to JavaScript-driven SPA frameworks like React and Vue.
+It is designed for teams that want Laravel + Livewire with a practical default setup that is fast to run, easy to test, and convenient to customize.
 
-This Livewire starter kit utilizes Livewire 4, TypeScript, Tailwind, and the [Flux UI](https://fluxui.dev) component library.
+## Added Packages
 
-If you are looking for the alternate configurations of this starter kit, they can be found in the following branches:
+### Development
 
-- [workos](https://github.com/laravel/livewire-starter-kit/tree/workos) - if WorkOS is selected for authentication
+- `fruitcake/laravel-debugbar` for request/debug inspection
+- `barryvdh/laravel-ide-helper` for IDE meta generation
+- `soloterm/solo` for local terminal workflow automation
+- `spatie/laravel-login-link` for local magic-login links
+- `onelegstudios/starter-kit-setup` for post-create environment setup
 
-## Official Documentation
+## Instalation
 
-Documentation for all Laravel starter kits can be found on the [Laravel website](https://laravel.com/docs/starter-kits).
+```
+laravel new --using=onelegstudios/starter-kit
+```
 
-## Contributing
+## Project Improvements
 
-Thank you for considering contributing to our starter kit! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Included a prebuilt test-user login shortcut in the login view when running in `local`.
+- Dark mode component with button, dropdown and two bar variatns.
+- Profile picture managment.
+- Uses [Lucide](https://lucide.dev/) insted of [Heroicons](https://heroicons.com/)
+- Implements MustVerifyEmail by default
 
-## Code of Conduct
+## Upstream Starter Kit
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+The original upstream starter kit documentation is available at:
+
+- [Laravel Starter Kits](https://laravel.com/docs/starter-kits)
+- [Livewire](https://livewire.laravel.com)
+- [Flux UI](https://fluxui.dev)
 
 ## License
 
-The Laravel + Livewire starter kit is open-sourced software licensed under the MIT license.
+This project is open-sourced software licensed under the MIT license.
