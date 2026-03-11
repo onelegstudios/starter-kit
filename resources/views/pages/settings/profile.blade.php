@@ -5,15 +5,21 @@ use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
 
-new class extends Component {
+new class extends Component
+{
     use ProfileValidationRules;
+    use WithFileUploads;
 
     public string $name = '';
+
     public string $email = '';
+
+    public ?TemporaryUploadedFile $photo = null;
 
     /**
      * Mount the component.
@@ -33,7 +39,15 @@ new class extends Component {
 
         $validated = $this->validate($this->profileRules($user->id));
 
-        $user->fill($validated);
+        $user->fill([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
+
+        if ($this->photo) {
+            $user->profile_photo_path = $this->photo->store('profile-photos', 'public');
+            $this->photo = null;
+        }
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
@@ -81,9 +95,19 @@ new class extends Component {
 
     <flux:heading class="sr-only">{{ __('Profile Settings') }}</flux:heading>
 
-    <x-pages::settings.layout :heading="__('Profile')" :subheading="__('Update your name and email address')">
+    <x-pages::settings.layout :heading="__('Profile')" :subheading="__('Update your name, email address and profile picture')">
         <form wire:submit="updateProfileInformation" class="w-full my-6 space-y-6">
-            <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name" />
+            <div class="flex items-center gap-10">
+                <flux:input wire:model="photo" :label="__('Profile photo')" type="file" accept="image/*" />
+                <flux:avatar
+                    :src="Auth::user()->profile_photo_path ? Storage::disk('public')->url(Auth::user()->profile_photo_path) : null"
+                    :name="Auth::user()->profile_photo_path ? null : Auth::user()->name"
+                    circle
+                    size="xl"
+                />
+            </div>
+
+                <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name" />
 
             <div>
                 <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
@@ -99,7 +123,7 @@ new class extends Component {
                         </flux:text>
 
                         @if (session('status') === 'verification-link-sent')
-                            <flux:text class="mt-2 font-medium !dark:text-green-400 !text-green-600">
+                            <flux:text class="mt-2 font-medium !dark:text-green-400 text-green-600!">
                                 {{ __('A new verification link has been sent to your email address.') }}
                             </flux:text>
                         @endif
