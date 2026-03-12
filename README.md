@@ -2,13 +2,11 @@
 
 ## Overview
 
-This project is based on `laravel/livewire-starter-kit` and extended with additional authentication, developer experience, and local-development tooling.
+This project extends laravel/livewire-starter-kit by providing enhanced developer experience and local development tools.
 
-It is designed for teams that want Laravel + Livewire with a practical default setup that is fast to run, easy to test, and convenient to customize.
+It is intended for teams seeking a Laravel + Livewire solution, offering a practical default setup that runs quickly, tests easily, and is highly customizable.
 
-## Added Packages
-
-### Development
+## Added Development Packages
 
 - `fruitcake/laravel-debugbar` for request/debug inspection
 - `barryvdh/laravel-ide-helper` for IDE meta generation
@@ -16,19 +14,19 @@ It is designed for teams that want Laravel + Livewire with a practical default s
 - `spatie/laravel-login-link` for local magic-login links
 - `onelegstudios/starter-kit-setup` for post-create environment setup
 
+## Project Improvements
+
+- The kit adds a shortcut that lets developers log in instantly as a preconfigured test user, saving time during local testing.
+- A customizable dark mode is included, with options such as button, dropdown, or two-bar configurations, giving users flexibility in how they enable dark mode.
+- Users can upload, update, or remove a profile picture directly from their profile settings, simplifying the process of managing personal avatars.
+- Uses [Lucide](https://lucide.dev/) insted of [Heroicons](https://heroicons.com/)
+- Implements MustVerifyEmail by default
+
 ## Instalation
 
 ```
 laravel new --using=onelegstudios/starter-kit
 ```
-
-## Project Improvements
-
-- Included a prebuilt test-user login shortcut in the login view when running in `local`.
-- Dark mode component with button, dropdown and two bar variatns.
-- Profile picture managment.
-- Uses [Lucide](https://lucide.dev/) insted of [Heroicons](https://heroicons.com/)
-- Implements MustVerifyEmail by default
 
 ## Upstream Starter Kit
 
