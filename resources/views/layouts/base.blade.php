@@ -18,7 +18,7 @@
     @fluxAppearance
 </head>
 
-<body class="min-h-screen antialiased bg-white dark:bg-zinc-800">
+<body class="min-h-screen antialiased bg-white dark:bg-zinc-900">
 
     {{ $slot }}
 
