@@ -3,6 +3,8 @@
 use App\Concerns\PasswordValidationRules;
 use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 new class extends Component {
@@ -19,7 +21,17 @@ new class extends Component {
             'password' => $this->currentPasswordRules(),
         ]);
 
-        tap(Auth::user(), $logout(...))->delete();
+        $user = Auth::user();
+        $profilePhotoPath = $user->profile_photo_path;
+
+        tap($user, $logout(...))->delete();
+
+        if ($profilePhotoPath && ! Storage::disk('public')->delete($profilePhotoPath)) {
+            Log::warning('Failed to delete profile photo on account deletion', [
+                'path' => $profilePhotoPath,
+                'user_id' => $user->getKey(),
+            ]);
+        }
 
         $this->redirect('/', navigate: true);
     }

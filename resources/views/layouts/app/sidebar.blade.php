@@ -33,7 +33,7 @@
         <flux:sidebar.spacer />
 
         @auth
-            <x-layouts.user-menu :circle="true" />
+            <livewire:layouts.user-menu :circle="true" />
         @else
             <flux:button href="{{ route('login') }}" variant="outline" icon="log-in" class="w-full">Login
             </flux:button>
@@ -54,7 +54,7 @@
             <x-layouts.dark-mode />
 
             @auth()
-                <x-layouts.user-menu :circle="true" />
+                <livewire:layouts.user-menu :circle="true" />
             @else
                 <flux:button icon="log-in" href="{{ route('login') }}" label="Login" />
                 <flux:button icon="user-plus" href="{{ route('register') }}" label="Register" variant="filled" />

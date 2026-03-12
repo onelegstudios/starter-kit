@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -36,6 +37,8 @@ new class extends Component
     public function updateProfileInformation(): void
     {
         $user = Auth::user();
+        $previousProfilePhotoPath = $user->profile_photo_path;
+        $newProfilePhotoPath = null;
 
         $validated = $this->validate($this->profileRules($user->id));
 
@@ -45,7 +48,14 @@ new class extends Component
         ]);
 
         if ($this->photo) {
-            $user->profile_photo_path = $this->photo->store('profile-photos', 'public');
+            $newProfilePhotoPath = $this->photo->store('profile-photos', 'public');
+
+            if ($newProfilePhotoPath === false) {
+                $this->addError('photo', __('Unable to store the profile photo. Please try again.'));
+                return;
+            }
+
+            $user->profile_photo_path = $newProfilePhotoPath;
             $this->photo = null;
         }
 
@@ -53,7 +63,20 @@ new class extends Component
             $user->email_verified_at = null;
         }
 
-        $user->save();
+        try {
+            $user->save();
+        } catch (\Exception $e) {
+            // If save fails, clean up the newly stored file to prevent orphaning
+            if ($newProfilePhotoPath !== null) {
+                Storage::disk('public')->delete($newProfilePhotoPath);
+            }
+
+            throw $e;
+        }
+
+        if ($newProfilePhotoPath !== null && $previousProfilePhotoPath) {
+            Storage::disk('public')->delete($previousProfilePhotoPath);
+        }
 
         $this->dispatch('profile-updated', name: $user->name);
     }
@@ -100,8 +123,8 @@ new class extends Component
             <div class="flex items-center gap-10">
                 <flux:input wire:model="photo" :label="__('Profile photo')" type="file" accept="image/*" />
                 <flux:avatar
-                    :src="Auth::user()->profile_photo_path ? Storage::disk('public')->url(Auth::user()->profile_photo_path) : null"
-                    :name="Auth::user()->profile_photo_path ? null : Auth::user()->name"
+                    :src="$photo && $photo->isPreviewable() ? $photo->temporaryUrl() : (Auth::user()->profile_photo_path ? Storage::disk('public')->url(Auth::user()->profile_photo_path) : null)"
+                    :name="($photo && $photo->isPreviewable()) || Auth::user()->profile_photo_path ? null : Auth::user()->name"
                     circle
                     size="xl"
                 />

@@ -41,7 +41,7 @@
                     class="w-40! max-lg:hidden" />
 
                 @auth()
-                    <x-layouts.user-menu align="end" />
+                    <livewire:layouts.user-menu align="end" />
                 @else
                     <flux:button icon="log-in" href="{{ route('login') }}" label="Login" />
                     <flux:button icon="user-plus" href="{{ route('register') }}" label="Register" variant="filled" />
