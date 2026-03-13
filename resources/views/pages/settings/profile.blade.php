@@ -27,8 +27,10 @@ new class extends Component
      */
     public function mount(): void
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $this->name = $user->name;
+        $this->email = $user->email;
     }
 
     /**
@@ -36,6 +38,7 @@ new class extends Component
      */
     public function updateProfileInformation(): void
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $previousProfilePhotoPath = $user->profile_photo_path;
         $newProfilePhotoPath = null;
@@ -86,6 +89,7 @@ new class extends Component
      */
     public function resendVerificationNotification(): void
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
@@ -108,8 +112,8 @@ new class extends Component
     #[Computed]
     public function showDeleteUser(): bool
     {
-        return ! Auth::user() instanceof MustVerifyEmail
-            || (Auth::user() instanceof MustVerifyEmail && Auth::user()->hasVerifiedEmail());
+        /** @phpstan-ignore-next-line */
+        return ! Auth::user() instanceof MustVerifyEmail || (Auth::user() instanceof MustVerifyEmail && Auth::user()->hasVerifiedEmail());
     }
 }; ?>
 
