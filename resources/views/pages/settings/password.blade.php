@@ -28,9 +28,8 @@ new #[Title('Password settings')] class extends Component {
 
             throw $e;
         }
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        $user->update([
+
+        Auth::user()->update([
             'password' => $validated['password'],
         ]);
 

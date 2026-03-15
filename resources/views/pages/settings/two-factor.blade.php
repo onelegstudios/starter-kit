@@ -37,13 +37,11 @@ new class extends Component {
     {
         abort_unless(Features::enabled(Features::twoFactorAuthentication()), Response::HTTP_FORBIDDEN);
 
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-        if (Fortify::confirmsTwoFactorAuthentication() && is_null($user->two_factor_confirmed_at)) {
-            $disableTwoFactorAuthentication($user);
+        if (Fortify::confirmsTwoFactorAuthentication() && is_null(auth()->user()->two_factor_confirmed_at)) {
+            $disableTwoFactorAuthentication(auth()->user());
         }
 
-        $this->twoFactorEnabled = $user->hasEnabledTwoFactorAuthentication();
+        $this->twoFactorEnabled = auth()->user()->hasEnabledTwoFactorAuthentication();
         $this->requiresConfirmation = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm');
     }
 
@@ -52,12 +50,10 @@ new class extends Component {
      */
     public function enable(EnableTwoFactorAuthentication $enableTwoFactorAuthentication): void
     {
-        /** @var \App\Models\User $user */
-            $user = auth()->user();
-            $enableTwoFactorAuthentication($user);
+        $enableTwoFactorAuthentication(auth()->user());
 
         if (! $this->requiresConfirmation) {
-            $this->twoFactorEnabled = $user->hasEnabledTwoFactorAuthentication();
+            $this->twoFactorEnabled = auth()->user()->hasEnabledTwoFactorAuthentication();
         }
 
         $this->loadSetupData();
@@ -70,12 +66,11 @@ new class extends Component {
      */
     private function loadSetupData(): void
     {
-        /** @var \App\Models\User $user */
         $user = auth()->user();
 
         try {
-            $this->qrCodeSvg = $user->twoFactorQrCodeSvg();
-            $this->manualSetupKey = decrypt((string) $user->two_factor_secret);
+            $this->qrCodeSvg = $user?->twoFactorQrCodeSvg();
+            $this->manualSetupKey = decrypt($user->two_factor_secret);
         } catch (Exception) {
             $this->addError('setupData', 'Failed to fetch setup data.');
 
@@ -106,9 +101,7 @@ new class extends Component {
     {
         $this->validate();
 
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-        $confirmTwoFactorAuthentication($user, $this->code);
+        $confirmTwoFactorAuthentication(auth()->user(), $this->code);
 
         $this->closeModal();
 
@@ -130,9 +123,7 @@ new class extends Component {
      */
     public function disable(DisableTwoFactorAuthentication $disableTwoFactorAuthentication): void
     {
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-        $disableTwoFactorAuthentication($user);
+        $disableTwoFactorAuthentication(auth()->user());
 
         $this->twoFactorEnabled = false;
     }
@@ -153,16 +144,12 @@ new class extends Component {
         $this->resetErrorBag();
 
         if (! $this->requiresConfirmation) {
-            /** @var \App\Models\User $user */
-            $user = auth()->user();
-            $this->twoFactorEnabled = $user->hasEnabledTwoFactorAuthentication();
+            $this->twoFactorEnabled = auth()->user()->hasEnabledTwoFactorAuthentication();
         }
     }
 
     /**
      * Get the current modal configuration state.
-     *
-     * @return array{title: string, description: string, buttonText: string}
      */
     public function getModalConfigProperty(): array
     {

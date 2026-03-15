@@ -20,7 +20,7 @@ new class extends Component {
         $this->validate([
             'password' => $this->currentPasswordRules(),
         ]);
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
         $profilePhotoPath = $user->profile_photo_path;
 

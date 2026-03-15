@@ -5,9 +5,6 @@ use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 new class extends Component {
-    /**
-     * @var array<int, string>
-     */
     #[Locked]
     public array $recoveryCodes = [];
 
@@ -34,7 +31,6 @@ new class extends Component {
      */
     private function loadRecoveryCodes(): void
     {
-        /** @var \App\Models\User $user */
         $user = auth()->user();
 
         if ($user->hasEnabledTwoFactorAuthentication() && $user->two_factor_recovery_codes) {
