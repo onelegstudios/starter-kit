@@ -5,6 +5,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 new class extends Component {
+    /** @phpstan-var array<int, string> */
     #[Locked]
     public array $recoveryCodes = [];
 

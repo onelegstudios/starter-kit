@@ -148,9 +148,11 @@ new class extends Component {
         }
     }
 
-    /**
-     * Get the current modal configuration state.
-     */
+     /**
+      * Get the current modal configuration state.
+      *
+      * @return array{title: string, description: string, buttonText: string}
+      */
     public function getModalConfigProperty(): array
     {
         if ($this->twoFactorEnabled) {
