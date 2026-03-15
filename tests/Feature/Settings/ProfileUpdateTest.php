@@ -7,6 +7,8 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
 use RuntimeException;
 use Tests\TestCase;
 
@@ -167,7 +169,7 @@ class ProfileUpdateTest extends TestCase
         $mockUser = \Mockery::mock($user)->makePartial();
         $mockUser->shouldReceive('save')->once()->andThrow(new RuntimeException('Unable to save user.'));
 
-        /** @var User&\Mockery\LegacyMockInterface&\Mockery\MockInterface $mockUser */
+        /** @var User&LegacyMockInterface&MockInterface $mockUser */
         $this->actingAs($mockUser);
 
         $photo = UploadedFile::fake()->image('new-profile.jpg');
