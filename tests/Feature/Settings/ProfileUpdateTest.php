@@ -1,9 +1,11 @@
 <?php
+
 namespace Tests\Feature\Settings;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -103,7 +105,7 @@ class ProfileUpdateTest extends TestCase
         Storage::fake('public');
 
         $user = User::factory()->create([
-            'name'               => 'Original User',
+            'name' => 'Original User',
             'profile_photo_path' => null,
         ]);
 
@@ -116,7 +118,7 @@ class ProfileUpdateTest extends TestCase
         Storage::disk('public')->put('profile-photos/updated-photo.jpg', 'updated-photo-content');
 
         $user->forceFill([
-            'name'               => 'Updated User',
+            'name' => 'Updated User',
             'profile_photo_path' => 'profile-photos/updated-photo.jpg',
         ])->save();
 
@@ -164,10 +166,20 @@ class ProfileUpdateTest extends TestCase
             'profile_photo_path' => 'profile-photos/old-photo.jpg',
         ]);
 
-        $mockUser = \Mockery::mock($user)->makePartial();
-        $mockUser->shouldReceive('save')->once()->andThrow(new RuntimeException('Unable to save user.'));
+        $this->actingAs($user);
 
-        $this->actingAs($mockUser);
+        $failingUser = new class extends User
+        {
+            public function save(array $options = []): bool
+            {
+                throw new RuntimeException('Unable to save user.');
+            }
+        };
+
+        $failingUser->setRawAttributes($user->getAttributes(), true);
+        $failingUser->exists = true;
+
+        Auth::shouldReceive('user')->andReturn($failingUser);
 
         $photo = UploadedFile::fake()->image('new-profile.jpg');
 
@@ -232,8 +244,8 @@ class ProfileUpdateTest extends TestCase
         Storage::disk('public')->put('profile-photos/existing.jpg', 'existing-photo-content');
 
         $user = User::factory()->create([
-            'name'               => 'Original Name',
-            'email'              => 'original@example.com',
+            'name' => 'Original Name',
+            'email' => 'original@example.com',
             'profile_photo_path' => 'profile-photos/existing.jpg',
         ]);
 
@@ -284,7 +296,7 @@ class ProfileUpdateTest extends TestCase
         Storage::disk('public')->put('profile-photos/existing.jpg', 'existing-photo-content');
 
         $user = User::factory()->create([
-            'name'               => 'Profile User',
+            'name' => 'Profile User',
             'profile_photo_path' => 'profile-photos/existing.jpg',
         ]);
 
@@ -343,16 +355,22 @@ class ProfileUpdateTest extends TestCase
 
     public function test_warning_is_logged_when_profile_photo_deletion_fails_during_account_deletion(): void
     {
-        Log::spy();
+        $user = User::factory()->create([
+            'profile_photo_path' => 'profile-photos/missing.jpg',
+        ]);
+
+        Log::shouldReceive('warning')
+            ->once()
+            ->withArgs(function (string $message, array $context) use ($user): bool {
+                return $message === 'Failed to delete profile photo on account deletion'
+                && ($context['path'] ?? null) === 'profile-photos/missing.jpg'
+                && ($context['user_id'] ?? null) === $user->getKey();
+            });
 
         Storage::shouldReceive('disk->delete')
             ->once()
             ->with('profile-photos/missing.jpg')
             ->andReturnFalse();
-
-        $user = User::factory()->create([
-            'profile_photo_path' => 'profile-photos/missing.jpg',
-        ]);
 
         $this->actingAs($user);
 
@@ -363,14 +381,6 @@ class ProfileUpdateTest extends TestCase
         $response
             ->assertHasNoErrors()
             ->assertRedirect('/');
-
-        Log::shouldHaveReceived('warning')
-            ->once()
-            ->withArgs(function (string $message, array $context) use ($user): bool {
-                return $message === 'Failed to delete profile photo on account deletion'
-                && ($context['path'] ?? null) === 'profile-photos/missing.jpg'
-                && ($context['user_id'] ?? null) === $user->getKey();
-            });
 
         $this->assertNull($user->fresh());
     }
