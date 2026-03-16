@@ -102,7 +102,7 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi",
             "@php artisan solo:install --ansi",
-            "@php artisan starter-kit-setup:using-herd --ansi",
+            "@php artisan starter-kit-setup:setup --ansi",
             "@php artisan ide-helper:generate --ansi",
             "@php artisan ide-helper:meta --ansi",
             "@php artisan ide-helper:models --ansi --nowrite",
