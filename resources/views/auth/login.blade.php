@@ -7,7 +7,7 @@
 
         @env('local')
             <div class="flex items-center justify-center p-4 border rounded-lg gap-4 text-zinc-600 dark:text-zinc-400">
-                <x-login-link email="test@example.com" :userAttributes="['name' => 'Test user']" label="Login as test user" />
+                <x-login-link email="test@example.com" :userAttributes="['name' => 'Test User']" label="Login as test user" />
             </div>
         @endenv
 
