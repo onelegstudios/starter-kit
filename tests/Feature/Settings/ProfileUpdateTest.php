@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Feature\Settings;
 
 use App\Models\User;
@@ -105,7 +106,7 @@ class ProfileUpdateTest extends TestCase
         Storage::fake('public');
 
         $user = User::factory()->create([
-            'name'               => 'Original User',
+            'name' => 'Original User',
             'profile_photo_path' => null,
         ]);
 
@@ -118,7 +119,7 @@ class ProfileUpdateTest extends TestCase
         Storage::disk('public')->put('profile-photos/updated-photo.jpg', 'updated-photo-content');
 
         $user->forceFill([
-            'name'               => 'Updated User',
+            'name' => 'Updated User',
             'profile_photo_path' => 'profile-photos/updated-photo.jpg',
         ])->save();
 
@@ -235,8 +236,8 @@ class ProfileUpdateTest extends TestCase
         Storage::disk('public')->put('profile-photos/existing.jpg', 'existing-photo-content');
 
         $user = User::factory()->create([
-            'name'               => 'Original Name',
-            'email'              => 'original@example.com',
+            'name' => 'Original Name',
+            'email' => 'original@example.com',
             'profile_photo_path' => 'profile-photos/existing.jpg',
         ]);
 
@@ -287,7 +288,7 @@ class ProfileUpdateTest extends TestCase
         Storage::disk('public')->put('profile-photos/existing.jpg', 'existing-photo-content');
 
         $user = User::factory()->create([
-            'name'               => 'Profile User',
+            'name' => 'Profile User',
             'profile_photo_path' => 'profile-photos/existing.jpg',
         ]);
 
