@@ -167,7 +167,7 @@ new class extends Component
         </form>
 
         @if ($this->showDeleteUser)
-            <livewire:pages::settings.profile.delete-user-form />
+            <livewire:settings.profile.delete-user-form />
         @endif
     </x-pages::settings.layout>
 </section>
