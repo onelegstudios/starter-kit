@@ -8,11 +8,24 @@ It is intended for teams seeking a Laravel + Livewire solution, offering a pract
 
 ## Project improvements
 
+### Philosophy
+
+This starter kit adopts the Livewire 4 view-first structure, organizing code into dedicated `pages`, `layouts`, and `components` folders.
+
+- Store only full-page Livewire components in `resources/views/pages`.
+- Place reusable helper UI components in `resources/views/components`, grouping them by domain (for example, (for example `components/settings/profile/*` and `components/settings/two-factor/*`).
+- Use Blade components when Livewire interactivity is not required.
+- Favor components over partials for reusable UI.
+
+### Key enhancements
+
 Experience enhanced usability and customization with this starter kit. It introduces several practical improvements over the upstream default. Enjoy customizable dark mode controls, including a button, a dropdown, and a visual toggle switch. The toggle switch comes in two variants. One displays text labels, while the other uses only an icon. Both variants are ideal for a settings page. The kit also supports profile picture upload, replacement, and removal from settings. Mail settings compatible with MailPint. It switches to [Lucide](https://lucide.dev) icons for a cleaner visual style and enables `MustVerifyEmail` by default.
+
+### Developer Tooling
 
 It also adds focused development and local tooling packages to improve workflow. [`barryvdh/laravel-ide-helper`](https://github.com/barryvdh/laravel-ide-helper) improves editor intelligence, [`fruitcake/laravel-debugbar`](https://github.com/fruitcake/laravel-debugbar) helps inspect requests and performance during development, [`soloterm/solo`](https://github.com/soloterm/solo)runs multiple commands simultaneously to aid local development. We made it easy to enable the local HTTP server and run the mailpint server. All the commands needed to run your application live are available through a single artisan command. [`spatie/laravel-login-link`](https://github.com/spatie/laravel-login-link) simplifies secure local login and testing flows.
 
-## Instalation
+## Installation
 
 ```
 laravel new --using=onelegstudios/starter-kit
