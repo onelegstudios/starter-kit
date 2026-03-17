@@ -40,7 +40,7 @@ new #[Title('Password settings')] class extends Component {
 }; ?>
 
 <section class="w-full">
-    @include('partials.settings-heading')
+    <x-settings.heading />
 
     <flux:heading class="sr-only">{{ __('Password settings') }}</flux:heading>
 
