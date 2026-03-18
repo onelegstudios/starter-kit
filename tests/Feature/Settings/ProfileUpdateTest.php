@@ -308,7 +308,7 @@ class ProfileUpdateTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = Livewire::test('pages::settings.profile.delete-user-modal')
+        $response = Livewire::test('settings.profile.delete-user-modal')
             ->set('password', 'password')
             ->call('deleteUser');
 
@@ -332,7 +332,7 @@ class ProfileUpdateTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = Livewire::test('pages::settings.profile.delete-user-modal')
+        $response = Livewire::test('settings.profile.delete-user-modal')
             ->set('password', 'password')
             ->call('deleteUser');
 
@@ -365,7 +365,7 @@ class ProfileUpdateTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = Livewire::test('pages::settings.profile.delete-user-modal')
+        $response = Livewire::test('settings.profile.delete-user-modal')
             ->set('password', 'password')
             ->call('deleteUser');
 
@@ -382,7 +382,7 @@ class ProfileUpdateTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = Livewire::test('pages::settings.profile.delete-user-modal')
+        $response = Livewire::test('settings.profile.delete-user-modal')
             ->set('password', 'wrong-password')
             ->call('deleteUser');
 
